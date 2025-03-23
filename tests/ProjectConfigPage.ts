@@ -9,6 +9,7 @@ export class ProjectConfigPage {
   readonly copyButton: Locator;
   readonly copySuccessToast: Locator;
   readonly projectConfigHeader: Locator;
+  readonly packageJsonPreview: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,7 +18,8 @@ export class ProjectConfigPage {
     this.projectConfigHeader = page.locator(
       "h2:has-text('Project Configuration')"
     );
-    this.commandPreElement = page.locator("pre");
+    this.commandPreElement = page.locator("pre").first(); // Get the first pre element (command)
+    this.packageJsonPreview = page.locator("pre").last(); // Get the last pre element (package.json)
     this.resetButton = page.getByRole("button", { name: "Reset" });
     this.copyButton = page.getByRole("button", { name: /Copy to Clipboard/ });
     this.copySuccessToast = page.locator(".toast .alert-success");
@@ -56,8 +58,12 @@ export class ProjectConfigPage {
     await expect(this.projectConfigHeader).toHaveText("Project Configuration");
   }
 
-  async assertCommandString(expectedCommand: string) {
-    await expect(this.commandPreElement).toContainText(expectedCommand);
+  async assertCommandContains(expectedSnippet: string) {
+    await expect(this.commandPreElement).toContainText(expectedSnippet);
+  }
+
+  async assertPackageJsonContains(expectedSnippet: string) {
+    await expect(this.packageJsonPreview).toContainText(expectedSnippet);
   }
 
   async assertCopySuccessVisible() {
