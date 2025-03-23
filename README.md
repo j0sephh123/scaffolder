@@ -9,6 +9,15 @@ None
 - all possible vite combinations from their website
 - docusaurus
 - hono?
+- tanstack stuff
+- react-hook-form
+- mui
+- mantine
+- ant design
+- zustand
+- redux
+- graphql stuff
+- astro?
 
 ## Vision
 
