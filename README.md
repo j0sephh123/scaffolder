@@ -1,8 +1,18 @@
-# Boilerplate Generator
+# Scaffolder
+
+## Supported stacks
+
+None
+
+## Ideas
+
+- all possible vite combinations from their website
+- docusaurus
+- hono?
 
 ## Vision
 
-Boilerplate Generator is a web application that allows developers to visually configure and generate project setups without memorizing complex CLI commands. The tool focuses on streamlining the initial project setup process by providing an intuitive UI for selecting technologies and generating shell scripts that handle the complete setup.
+Scaffolder is a web application that allows developers to visually configure and generate project setups without memorizing complex CLI commands. The tool focuses on streamlining the initial project setup process by providing an intuitive UI for selecting technologies and generating shell scripts that handle the complete setup.
 
 ## Core Features
 
@@ -35,6 +45,7 @@ The generator will be built as a client-side application that dynamically constr
 ## Future Possibilities
 
 While the initial focus is on the core project generation, future enhancements could include:
+
 - Saved configurations for teams
 - Additional frameworks and libraries
 - Template selection for common application types
@@ -79,6 +90,7 @@ The generator will be built as a client-side application that dynamically constr
 ## Future Possibilities
 
 While the initial focus is on the core project generation, future enhancements could include:
+
 - Saved configurations for teams
 - Additional frameworks and libraries
 - Template selection for common application types
