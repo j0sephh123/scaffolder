@@ -24,10 +24,16 @@ For now i will assume that all projects use react, vite and typescript, so I'll 
 - graphql stuff
 - astro?
 
+## How to test
+`npx playwright test`
+
 ## Why
 
 I've always wanted to try different libraries and integrations between them, but the initial setup takes a lot of time (even with AI) which is kinda losing the point for me. For example, I may want to have vite + react + typescript + daisyui + react-query + zustand front end and nestjs backend with prisma. To setup all that it will take a lot of time. The fact that i need to explain all of that the AI and then validate manually if it is working. I prefer to have stuff that i know works and then have a script that i can use with buttons as a starting point.  
 Additionally, having a dashboard to see all possible scaffolds provides ideas for what is possible.
+
+## Versioning
+I don't have an idea right now how this would be handled, so i will simply copy the ones from my local projects that i experiment with.
 
 ## Vision
 
