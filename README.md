@@ -2,9 +2,14 @@
 
 ## Supported stacks
 
-None
+For now i will assume that all projects use react, vite and typescript, so I'll outline only the differences between them
+
+- esbuild
+- swc
 
 ## Ideas
+
+- check [this](https://github.com/vitejs/awesome-vite?tab=readme-ov-file#react) github repo for resources - which ones actually work. I should decide what to do with the ones that work - should I link them here or something else - not sure yet!
 
 - all possible vite combinations from their website
 - docusaurus
@@ -20,6 +25,7 @@ None
 - astro?
 
 ## Why
+
 I've always wanted to try different libraries and integrations between them, but the initial setup takes a lot of time (even with AI) which is kinda losing the point for me. For example, I may want to have vite + react + typescript + daisyui + react-query + zustand front end and nestjs backend with prisma. To setup all that it will take a lot of time. The fact that i need to explain all of that the AI and then validate manually if it is working. I prefer to have stuff that i know works and then have a script that i can use with buttons as a starting point.  
 Additionally, having a dashboard to see all possible scaffolds provides ideas for what is possible.
 
