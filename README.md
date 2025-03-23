@@ -19,6 +19,10 @@ None
 - graphql stuff
 - astro?
 
+## Why
+I've always wanted to try different libraries and integrations between them, but the initial setup takes a lot of time (even with AI) which is kinda losing the point for me. For example, I may want to have vite + react + typescript + daisyui + react-query + zustand front end and nestjs backend with prisma. To setup all that it will take a lot of time. The fact that i need to explain all of that the AI and then validate manually if it is working. I prefer to have stuff that i know works and then have a script that i can use with buttons as a starting point.  
+Additionally, having a dashboard to see all possible scaffolds provides ideas for what is possible.
+
 ## Vision
 
 Scaffolder is a web application that allows developers to visually configure and generate project setups without memorizing complex CLI commands. The tool focuses on streamlining the initial project setup process by providing an intuitive UI for selecting technologies and generating shell scripts that handle the complete setup.
