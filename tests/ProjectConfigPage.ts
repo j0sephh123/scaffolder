@@ -5,6 +5,7 @@ export class ProjectConfigPage {
   readonly projectNameInput: Locator;
   readonly bundlerSelect: Locator;
   readonly commandPreElement: Locator;
+  readonly viteConfigPreElement: Locator; // New locator for vite config
   readonly resetButton: Locator;
   readonly copyButton: Locator;
   readonly copySuccessToast: Locator;
@@ -15,11 +16,10 @@ export class ProjectConfigPage {
     this.page = page;
     this.projectNameInput = page.locator('input[name="projectName"]');
     this.bundlerSelect = page.locator('select[name="bundler"]');
-    this.projectConfigHeader = page.locator(
-      "h2:has-text('Project Configuration')"
-    );
-    this.commandPreElement = page.locator("pre").first(); // Get the first pre element (command)
-    this.packageJsonPreview = page.locator("pre").last(); // Get the last pre element (package.json)
+    this.projectConfigHeader = page.locator("h2:has-text('Project Configuration')");
+    this.commandPreElement = page.locator("pre").first();
+    this.packageJsonPreview = page.locator("pre").nth(1); // Package.json would be the second pre
+    this.viteConfigPreElement = page.locator("pre").nth(2); // Vite config would be the third pre
     this.resetButton = page.getByRole("button", { name: "Reset" });
     this.copyButton = page.getByRole("button", { name: /Copy to Clipboard/ });
     this.copySuccessToast = page.locator(".toast .alert-success");
@@ -64,6 +64,18 @@ export class ProjectConfigPage {
 
   async assertPackageJsonContains(expectedSnippet: string) {
     await expect(this.packageJsonPreview).toContainText(expectedSnippet);
+  }
+
+  async assertPackageJsonNotContains(unexpectedSnippet: string) {
+    await expect(this.packageJsonPreview).not.toContainText(unexpectedSnippet);
+  }
+
+  async assertViteConfigContains(expectedSnippet: string) {
+    await expect(this.viteConfigPreElement).toContainText(expectedSnippet);
+  }
+
+  async assertViteConfigNotContains(unexpectedSnippet: string) {
+    await expect(this.viteConfigPreElement).not.toContainText(unexpectedSnippet);
   }
 
   async assertCopySuccessVisible() {

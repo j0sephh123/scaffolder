@@ -6,13 +6,30 @@ type FormState = {
   bundler: "esbuild" | "swc";
   commandString: string;
   copySuccess: boolean;
+  viteConfigContent: string;
   updateProjectName: (name: string) => void;
   updateBundler: (bundler: "esbuild" | "swc") => void;
   generateCommand: () => void;
   setCopySuccess: (status: boolean) => void;
   copyToClipboard: () => void;
   generatePackageJson: () => string;
+  generateViteConfig: () => string;
   packageJsonContent: string;
+};
+
+type DevDependencies = {
+  "@eslint/js": string;
+  "@types/react": string;
+  "@types/react-dom": string;
+  "@vitejs/plugin-react": string | null;
+  "@vitejs/plugin-react-swc": string | null;
+  eslint: string;
+  "eslint-plugin-react-hooks": string;
+  "eslint-plugin-react-refresh": string;
+  globals: string;
+  typescript: string;
+  "typescript-eslint": string;
+  vite: string;
 };
 
 export const useStore = create<FormState>((set, get) => ({
@@ -20,6 +37,7 @@ export const useStore = create<FormState>((set, get) => ({
   bundler: "esbuild",
   commandString: "",
   packageJsonContent: "",
+  viteConfigContent: "",
   copySuccess: false,
 
   updateProjectName: (name) => set({ projectName: name }),
@@ -30,9 +48,13 @@ export const useStore = create<FormState>((set, get) => ({
     const { projectName, bundler } = get();
     const template = bundler === "swc" ? "react-swc-ts" : "react-ts";
     const packageJsonContent = get().generatePackageJson();
+    const viteConfigContent = get().generateViteConfig();
 
-    const delimiter =
+    const packageJsonDelimiter =
       "EOF_PACKAGE_JSON_" + Math.random().toString(36).substring(2, 10);
+
+    const viteConfigDelimiter =
+      "EOF_VITE_CONFIG_" + Math.random().toString(36).substring(2, 10);
 
     const commands = [
       `#!/bin/bash`,
@@ -43,9 +65,14 @@ export const useStore = create<FormState>((set, get) => ({
       ``,
       `echo "Updating package.json..."`,
       `cd ${projectName}`,
-      `cat > package.json << '${delimiter}'`,
+      `cat > package.json << '${packageJsonDelimiter}'`,
       packageJsonContent,
-      delimiter,
+      packageJsonDelimiter,
+      ``,
+      `echo "Updating vite.config.ts..."`,
+      `cat > vite.config.ts << '${viteConfigDelimiter}'`,
+      viteConfigContent,
+      viteConfigDelimiter,
       ``,
       `echo "cd ${projectName}"`,
     ].join("\n");
@@ -53,6 +80,7 @@ export const useStore = create<FormState>((set, get) => ({
     set({
       commandString: commands,
       packageJsonContent: packageJsonContent,
+      viteConfigContent: viteConfigContent,
     });
   },
 
@@ -87,18 +115,39 @@ export const useStore = create<FormState>((set, get) => ({
         typescript: "~5.7.2",
         "typescript-eslint": "^8.24.1",
         vite: "^6.2.0",
-      },
+      } as DevDependencies,
     };
 
+    // Create a properly typed cleaned version of devDependencies
     const cleanedDevDependencies = Object.fromEntries(
       Object.entries(packageJson.devDependencies).filter(
-        ([_, value]) => value !== null
+        ([, value]) => value !== null
       )
-    );
+    ) as DevDependencies;
 
     packageJson.devDependencies = cleanedDevDependencies;
 
     return JSON.stringify(packageJson, null, 2);
+  },
+
+  generateViteConfig: () => {
+    const { bundler } = get();
+
+    if (bundler === "swc") {
+      return `import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+
+export default defineConfig({
+  plugins: [react()],
+})`;
+    } else {
+      return `import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+});`;
+    }
   },
 
   setCopySuccess: (status) => set({ copySuccess: status }),
